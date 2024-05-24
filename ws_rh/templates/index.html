@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Ressources Humaines</title>
+</head>
+<body>
+    <h1>Liste des employés</h1>
+    <table>
+        <tr>
+            <th>Prénom</th>
+            <th>Nom</th>
+            <th>Âge</th>
+            <th>Date de début</th>
+            <th>Date de fin</th>
+            <th>Usine</th>
+        </tr>
+        {% for employee in employees %}
+        <tr>
+            <td>{{ employee.firstname }}</td>
+            <td>{{ employee.lastname }}</td>
+            <td>{{ employee.age }}</td>
+            <td>{{ employee.start_date }}</td>
+            <td>{{ employee.end_date }}</td>
+            <td>{{ employee.factory.name }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
