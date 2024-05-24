@@ -1,34 +1,42 @@
--- hb_views.sql
+-- Vue pour afficher tous les employés
 CREATE VIEW ALL_WORKERS AS
 SELECT
-    e.id_employee,
-    e.firstname,
-    e.lastname,
-    e.age,
-    e.start_date,
-    f.name AS factory_name
-FROM employees e
-JOIN factories f ON e.factory_id = f.id_factory
-WHERE e.end_date IS NULL;
+    id_employee AS worker_id,
+    firstname AS first_name,
+    lastname AS last_name,
+    age,
+    start_date
+FROM employees
+WHERE end_date IS NULL;
 
+-- Vue pour afficher le nombre de jours écoulés depuis l'arrivée de chaque employé
 CREATE VIEW ALL_WORKERS_ELAPSED AS
-SELECT firstname, lastname, age, start_date, 
-       CURRENT_DATE - start_date AS days_elapsed
+SELECT
+    worker_id,
+    first_name,
+    last_name,
+    age,
+    start_date,
+    CURRENT_DATE - start_date AS days_elapsed
 FROM ALL_WORKERS;
 
+-- Vue pour afficher les meilleurs fournisseurs
 CREATE VIEW BEST_SUPPLIERS AS
-SELECT s.name, SUM(d.quantity) as total_quantity
-FROM suppliers s
-JOIN deliveries d ON s.id = d.supplier_id
+SELECT
+    s.name AS supplier_name,
+    SUM(d.quantity) AS total_quantity
+FROM deliveries d
+JOIN suppliers s ON d.supplier_id = s.id_supplier
 GROUP BY s.name
 HAVING SUM(d.quantity) > 1000
 ORDER BY total_quantity DESC;
 
+-- Vue pour afficher les usines ayant assemblé chaque robot
 CREATE VIEW ROBOTS_FACTORIES AS
 SELECT
-    r.id_robot,
+    r.id_robot AS robot_id,
     r.model_name,
-    r.created_at,
+    r.created_at AS production_date,
     f.name AS factory_name
 FROM robots r
 JOIN factories f ON r.factory_id = f.id_factory;
