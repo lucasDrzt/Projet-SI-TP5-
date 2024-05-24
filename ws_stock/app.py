@@ -15,6 +15,11 @@ QUANTITY_STORE = (
     "SELECT quantity FROM inventory WHERE product_id = %s AND store_id = %s"
 )
 
+TEST = (
+    "SELECT * FROM client"
+
+)
+
 #endregion
 
 load_dotenv()
@@ -30,6 +35,14 @@ def quantity():
 def quantity_store(store_id):
     with connection.cursor() as cursor:
         cursor.execute(QUANTITY_STORE, (store_id))
+        quantity = cursor.fetchone()
+
+    return {'quantity': quantity}
+
+@app.get('/api/test')
+def test():
+    with connection.cursor() as cursor:
+        cursor.execute(TEST)
         quantity = cursor.fetchone()
 
     return {'quantity': quantity}
