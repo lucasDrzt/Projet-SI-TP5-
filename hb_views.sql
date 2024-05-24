@@ -1,9 +1,15 @@
--- my_views.sql
+-- hb_views.sql
 CREATE VIEW ALL_WORKERS AS
-SELECT firstname, lastname, age, start_date
-FROM employees
-WHERE end_date IS NULL
-ORDER BY start_date DESC;
+SELECT
+    e.id_employee,
+    e.firstname,
+    e.lastname,
+    e.age,
+    e.start_date,
+    f.name AS factory_name
+FROM employees e
+JOIN factories f ON e.factory_id = f.id_factory
+WHERE e.end_date IS NULL;
 
 CREATE VIEW ALL_WORKERS_ELAPSED AS
 SELECT firstname, lastname, age, start_date, 
@@ -19,6 +25,10 @@ HAVING SUM(d.quantity) > 1000
 ORDER BY total_quantity DESC;
 
 CREATE VIEW ROBOTS_FACTORIES AS
-SELECT r.model_name, r.factory_id, f.name AS factory_name
+SELECT
+    r.id_robot,
+    r.model_name,
+    r.created_at,
+    f.name AS factory_name
 FROM robots r
-JOIN factories f ON r.factory_id = f.id;
+JOIN factories f ON r.factory_id = f.id_factory;
