@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Fournisseurs</title>
+</head>
+<body>
+    <h1>Livraisons des 10 derniers jours</h1>
+    <table>
+        <tr>
+            <th>Nom du fournisseur</th>
+            <th>Date de livraison</th>
+            <th>Quantité livrée</th>
+        </tr>
+        {% for delivery in deliveries %}
+        <tr>
+            <td>{{ delivery.name }}</td>
+            <td>{{ delivery.delivery_date }}</td>
+            <td>{{ delivery.quantity }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>
+
