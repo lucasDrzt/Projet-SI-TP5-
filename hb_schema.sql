@@ -38,6 +38,7 @@ CREATE TABLE robots (
 CREATE TABLE stock (
     id_stock SERIAL PRIMARY KEY,
     robot_id INT REFERENCES robots(id_robot),
+    factory_id INT REFERENCES factories(id_factory),
     quantity INT
 );
 
